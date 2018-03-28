@@ -4,9 +4,22 @@ public class Fila {
 
     public static void main(String[] args) {
         try {
+
+
             Pedido[] pedidos = DAO.lerPedidos();
-            for (Pedido p : pedidos)
-                System.out.println(p);
+            float acumulador = 0;
+            int horas = 0;
+            for (Pedido p : pedidos) {
+                System.out.println("Pedido: " + p);
+                acumulador += p.getPeso();
+                if (acumulador >= 35) {
+                    horas++;
+                    acumulador-=35;
+                    System.out.println("Tempo para receber o lote: " + horas);
+                }
+            }
+
+
         }
         catch (IOException e) {
             System.err.println("Ops:");
