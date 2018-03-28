@@ -8,15 +8,15 @@ public class Fila {
 
             Pedido[] pedidos = DAO.lerPedidos();
             float acumulador = 0;
-            int horas = 0;
+            int horas = 1;
             for (Pedido p : pedidos) {
                 System.out.println("Pedido: " + p);
                 acumulador += p.getPeso();
                 if (acumulador >= 35) {
                     horas++;
                     acumulador-=35;
-                    System.out.println("Tempo para receber o lote: " + horas);
                 }
+                System.out.println("Tempo para receber o lote: " + horas);
             }
 
 
