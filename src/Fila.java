@@ -14,7 +14,7 @@ public class Fila {
             }
         }
         catch (IOException e) {
-            System.err.println("Ops");
+            System.err.println("Ops:");
             e.printStackTrace();
         }
     }
