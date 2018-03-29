@@ -3,6 +3,7 @@ public class Pedido {
     private Cliente cliente;
     private float peso;
     private float precoDoKg;
+    private int tempoDeTermino;
 
     public Pedido(Cliente cliente, float peso, float precoDoKg) {
         this.cliente = cliente;
@@ -12,6 +13,14 @@ public class Pedido {
 
     public Cliente getCliente() {
         return cliente;
+    }
+
+    public int getTempoDeTermino() {
+        return tempoDeTermino;
+    }
+
+    public void setTempoDeTermino(int tempoDeTermino) {
+        this.tempoDeTermino = tempoDeTermino;
     }
 
     public void setCliente(Cliente cliente) {
