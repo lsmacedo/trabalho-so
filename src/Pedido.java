@@ -34,6 +34,7 @@ public class Pedido {
         this.precoDoKg = precoDoKg;
     }
 
+
     @Override
     public String toString() {
         return "Nome: " + this.cliente.getNome() + " | Peso: " + this.peso + " kg | Preço por kg: R$ " + this.precoDoKg;
