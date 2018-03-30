@@ -1,4 +1,4 @@
-public class Pedido {
+public class Pedido implements Comparable{
 
     private Cliente cliente;
     private float peso;
@@ -47,6 +47,11 @@ public class Pedido {
     @Override
     public String toString() {
         return "Nome: " + this.cliente.getNome() + " | Peso: " + this.peso + " kg | Preço por kg: R$ " + this.precoDoKg;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return (int) (this.getPeso() - ((Pedido) o).getPeso());
     }
 
 }
