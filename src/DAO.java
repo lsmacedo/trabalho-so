@@ -4,31 +4,47 @@ import java.io.IOException;
 
 public class DAO {
 
-    public static Pedido[] lerPedidos() throws IOException {
+    private static String[] lerRegistro() throws IOException {
         BufferedReader br = new BufferedReader(new FileReader("arquivo.txt"));
 
         String linha = br.readLine();
         int tam = Integer.parseInt(linha);
         int i = 0;
         String[] pedidos = new String[tam];
-        Pedido[] retorno = new Pedido[tam];
 
         while ((linha = br.readLine()) != null) {
             pedidos[i++] = linha;
         }
 
-        i = 0;
+        br.close();
+        return pedidos;
+    }
 
-        for (String pedido : pedidos) {
-            String[] gambi = pedido.split(";");
+    public static Pedido[] lerPedidos() throws IOException {
+        String[] pedidos = lerRegistro();
+        Pedido[] retorno = new Pedido[pedidos.length];
+        for (int i = 0; i < pedidos.length; i++) {
+            String[] gambi = pedidos[i].split(";");
             String nomeCliente = gambi[0];
             float peso = Float.parseFloat(gambi[1]);
             float precoPorKg = Float.parseFloat(gambi[2]);
-            Pedido p = new Pedido(new Cliente(nomeCliente), peso, precoPorKg);
-            retorno[i++] = p;
+            Pedido p = new Pedido(nomeCliente, peso, precoPorKg);
+            retorno[i] = p;
         }
+        return retorno;
+    }
 
-        br.close();
+    public static PedidoFP[] lerPedidosFP() throws IOException {
+        String[] pedidos = lerRegistro();
+        PedidoFP[] retorno = new PedidoFP[pedidos.length];
+        for (int i = 0; i < pedidos.length; i++) {
+            String[] gambi = pedidos[i].split(";");
+            String nomeCliente = gambi[0];
+            float peso = Float.parseFloat(gambi[1]);
+            float precoPorKg = Float.parseFloat(gambi[2]);
+            PedidoFP p = new PedidoFP(nomeCliente, peso, precoPorKg);
+            retorno[i] = p;
+        }
         return retorno;
     }
 

@@ -2,47 +2,49 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FilaPrioridade<E extends Comparable<E>> {
+public class FilaPrioridade {
 
     public static void main(String[] args) {
         try {
-            List<Cliente> clientes = new ArrayList<>();
-            PedidoFP[] pedidos = DAOFP.lerPedidos();
-            float acumulador = 0;
-            int horas = 1;
-            int totalHoras = 0;
-            FilaPrioridade f = new FilaPrioridade();
+            List<Cliente> clientes = new ArrayList<>();  // Lista de clientes
+            PedidoFP[] pedidos = DAO.lerPedidosFP();     // Lista de pedidos
+            HeapMax fp = new HeapMax();    // Fila de prioridades para o escalonador
+            float acumulador = 0;                        // Recebe a quantidade de roupas lavada
+            int horas = 1;                               // Quantidade de horas passadas
+            PedidoFP pedido;                             // Pedido atual
+            Cliente cliente;                             // Cliente atual
 
-            for (Pedido p : pedidos) {
-                f.insert(p);
-            }
+            // Percorrendo lista de pedidos e adicionando na fila de prioridade
+            for (PedidoFP p : pedidos) fp.insert(p);
 
-            PedidoFP p;
+            // Percorre pedidos da fila de prioridade
+            while (!fp.isEmpty()) {
+                pedido = (PedidoFP) fp.removeMax();
 
-            while (!f.isEmpty()) {
-                p = (PedidoFP) f.removeMax();
-                if (!clientes.contains(p.getCliente())) {
-                    clientes.add(p.getCliente());
-                    p.getCliente().addPedido(p);
+                if (clientes.contains(new Cliente(pedido.getCliente()))) {
+                    int posNaLista = clientes.indexOf(new Cliente(pedido.getCliente()));
+                    cliente = clientes.get(posNaLista);
                 } else {
-                    int posNaLista = clientes.indexOf(p.getCliente());
-                    clientes.get(posNaLista).addPedido(p);
-                    p.setCliente(clientes.get(posNaLista));
+                    cliente = new Cliente(pedido.getCliente());
+                    clientes.add(cliente);
                 }
-                System.out.println("Pedido: " + p);
 
-                acumulador += p.getPeso();
+                System.out.println("Pedido: " + pedido);
+
+                acumulador += pedido.getPeso();
                 while (acumulador >= 35) {
                     horas++;
-                    acumulador-=35;
+                    acumulador -= 35;
                 }
-                p.getCliente().setTempoEspera(horas);
-                p.setTempoDeTermino(horas);
+
+                cliente.setTempoEspera(horas);
+                pedido.setTempoDeTermino(horas);
+                cliente.addPedido(pedido);
             }
 
             System.out.println();
 
-            for (Cliente c : clientes){
+            for (Cliente c : clientes) {
 
                 int tempoDecorrido;
                 tempoDecorrido = c.getPedidos().get(0).getTempoDeTermino();
@@ -52,23 +54,26 @@ public class FilaPrioridade<E extends Comparable<E>> {
 
             System.out.println();
 
-            for(Cliente c:clientes) {
-                totalHoras += c.getTempoEspera();
-                System.out.println("Tempo de espera do cliente "+ c.getNome()+ ": " + c.getTempoEspera()+ " horas");
+            for (Cliente c : clientes) {
+                horas += c.getTempoEspera();
+                System.out.println("Tempo de espera do cliente " + c.getNome() + ": " + c.getTempoEspera() + " horas");
 
             }
-            System.out.println("\nTempo médio de espera: "+ (float)totalHoras/clientes.size()+" horas");
+            System.out.println("\nTempo médio de espera: " + (float) horas / clientes.size() + " horas");
 
         } catch (IOException e) {
 
         }
     }
 
+}
+
+class HeapMax<E extends Comparable<E>> {
     private Object S[];
     private int last;
     private int capacity;
 
-    public FilaPrioridade() {
+    public HeapMax() {
         S = new Object[11];
         last = 0;
         capacity = 7;
@@ -96,7 +101,7 @@ public class FilaPrioridade<E extends Comparable<E>> {
     public void insert(E e) throws HeapException {
         if (size() == capacity)
             throw new HeapException("Heap overflow.");
-        else{
+        else {
             last++;
             S[last] = e;
             upHeapBubble();
@@ -115,32 +120,32 @@ public class FilaPrioridade<E extends Comparable<E>> {
         }
     }
 
-    private void downHeapBubble(){
+    private void downHeapBubble() {
         int index = 1;
-        while (true){
-            int child = index*2;
+        while (true) {
+            int child = index * 2;
             if (child > size())
                 break;
-            if (child + 1 >= size()){
+            if (child + 1 >= size()) {
                 //if there are two children -> take the smalles or
                 //if they are equal take the left one
                 child = findMax(child, child + 1);
             }
-            if (compare(S[index],S[child]) >= 0 )
+            if (compare(S[index], S[child]) >= 0)
                 break;
-            swap(index,child);
+            swap(index, child);
             index = child;
         }
     }
 
-    private void upHeapBubble(){
+    private void upHeapBubble() {
         int index = size();
-        while (index > 1){
+        while (index > 1) {
             int parent = index / 2;
             if (compare(S[index], S[parent]) <= 0)
                 //break if the parent is greater or equal to the current element
                 break;
-            swap(index,parent);
+            swap(index, parent);
             index = parent;
         }
     }
@@ -161,6 +166,12 @@ public class FilaPrioridade<E extends Comparable<E>> {
 }
 
 class HeapException extends RuntimeException {
-    public HeapException(){};
-    public HeapException(String msg){super(msg);}
+    public HeapException() {
+    }
+
+    ;
+
+    public HeapException(String msg) {
+        super(msg);
+    }
 }

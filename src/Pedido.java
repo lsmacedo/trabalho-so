@@ -1,17 +1,17 @@
 public class Pedido implements Comparable{
 
-    private Cliente cliente;
+    private String cliente;
     private float peso;
     private float precoDoKg;
     private int tempoDeTermino;
 
-    public Pedido(Cliente cliente, float peso, float precoDoKg) {
+    public Pedido(String cliente, float peso, float precoDoKg) {
         this.cliente = cliente;
         this.peso = peso;
         this.precoDoKg = precoDoKg;
     }
 
-    public Cliente getCliente() {
+    public String getCliente() {
         return cliente;
     }
 
@@ -23,7 +23,7 @@ public class Pedido implements Comparable{
         this.tempoDeTermino = tempoDeTermino;
     }
 
-    public void setCliente(Cliente cliente) {
+    public void setCliente(String cliente) {
         this.cliente = cliente;
     }
 
@@ -46,7 +46,7 @@ public class Pedido implements Comparable{
 
     @Override
     public String toString() {
-        return "Nome: " + this.cliente.getNome() + " | Peso: " + this.peso + " kg | Preço por kg: R$ " + this.precoDoKg;
+        return "Nome: " + this.cliente + " | Peso: " + this.peso + " kg | Preço por kg: R$ " + this.precoDoKg;
     }
 
     @Override

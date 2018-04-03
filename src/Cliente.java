@@ -17,23 +17,17 @@ public class Cliente {
         this.tempoEspera = tempoEspera;
     }
 
-    public int getTempoEspera() {return tempoEspera; }
+    public int getTempoEspera() { return tempoEspera; }
 
-    public void addPedido(Pedido p) {
-        pedidos.add(p);
-    }
+    public void addPedido(Pedido p) { pedidos.add(p); }
 
     public String getNome() {
         return nome;
     }
 
-    public List<Pedido> getPedidos() {
-        return pedidos;
-    }
+    public List<Pedido> getPedidos() { return pedidos; }
 
     @Override
-    public boolean equals(Object o) {
-        return o instanceof Cliente && this.nome.equals(((Cliente) o).getNome());
-    }
+    public boolean equals(Object o) { return o instanceof Cliente && this.nome.equals(((Cliente) o).getNome()); }
 
 }

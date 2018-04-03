@@ -10,26 +10,28 @@ public class Fila {
             List<Cliente> clientes = new ArrayList<>();
             Pedido[] pedidos = DAO.lerPedidos();
             float acumulador = 0; int horas = 1; int totalHoras=0;
+            Cliente cliente;
 
-            for (Pedido p : pedidos) {
-                if (!clientes.contains(p.getCliente())) {
-                    clientes.add(p.getCliente());
-                    p.getCliente().addPedido(p);
-                } else {
-                    int posNaLista = clientes.indexOf(p.getCliente());
-                    clientes.get(posNaLista).addPedido(p);
-                    p.setCliente(clientes.get(posNaLista));
+            for (Pedido pedido : pedidos) {
+                if (clientes.contains(new Cliente(pedido.getCliente()))) {
+                    int posNaLista = clientes.indexOf(new Cliente(pedido.getCliente()));
+                    cliente = clientes.get(posNaLista);
                 }
-                System.out.println("Pedido: " + p);
+                else {
+                    cliente = new Cliente(pedido.getCliente());
+                    clientes.add(cliente);
+                }
+                System.out.println("Pedido: " + pedido);
 
-                acumulador += p.getPeso();
+                acumulador += pedido.getPeso();
                 while (acumulador >= 35) {
                     horas++;
                     acumulador-=35;
                 }
-                p.getCliente().setTempoEspera(horas);
-                p.setTempoDeTermino(horas);
 
+                pedido.setTempoDeTermino(horas);
+                cliente.setTempoEspera(horas);
+                cliente.addPedido(pedido);
             }
 
             System.out.println();
