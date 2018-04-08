@@ -1,6 +1,6 @@
 package Main;
 
-import DataStructures.OrdemChegada;
+import DataStructures.OrdemPedidos;
 
 import java.util.Scanner;
 
@@ -31,15 +31,18 @@ public class Main {
                 switch (resp) {
 
                     case 1:
-                        OrdemChegada ordem = new OrdemChegada();
+                        OrdemPedidos ordem = new OrdemPedidos(OrdemPedidos.ORDEM_CHEGADA);
                         ordem.simularPedidos();
-                        ordem.mostrarSimulacaoCompleta();
                         break;
                     case 2:
+                        OrdemPedidos ordemMenor = new OrdemPedidos(OrdemPedidos.MENOR_PESO_PRIMEIRO);
+                        ordemMenor.simularPedidosHeap();
                         break;
                     case 3:
                         break;
                     case 4:
+                        OrdemPedidos ordemMaior = new OrdemPedidos(OrdemPedidos.MAIOR_PRECO_KG_PRIMEIRO);
+                        ordemMaior.simularPedidosHeap();
                         break;
                     case 9:
                         return;

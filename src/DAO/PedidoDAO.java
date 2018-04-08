@@ -1,11 +1,12 @@
 package DAO;
 
 import Objects.Pedido;
-import Objects.PedidoFP;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PedidoDAO {
 
@@ -25,30 +26,16 @@ public class PedidoDAO {
         return pedidos;
     }
 
-    public static Pedido[] lerPedidos() throws IOException {
+    public static List<Pedido> lerPedidos(int ordemPedido) throws IOException {
         String[] pedidos = lerRegistro();
-        Pedido[] retorno = new Pedido[pedidos.length];
+        List<Pedido> retorno = new ArrayList<>();
         for (int i = 0; i < pedidos.length; i++) {
             String[] gambi = pedidos[i].split(";");
             String nomeCliente = gambi[0];
             float peso = Float.parseFloat(gambi[1]);
             float precoPorKg = Float.parseFloat(gambi[2]);
-            Pedido p = new Pedido(nomeCliente, peso, precoPorKg);
-            retorno[i] = p;
-        }
-        return retorno;
-    }
-
-    public static PedidoFP[] lerPedidosFP() throws IOException {
-        String[] pedidos = lerRegistro();
-        PedidoFP[] retorno = new PedidoFP[pedidos.length];
-        for (int i = 0; i < pedidos.length; i++) {
-            String[] gambi = pedidos[i].split(";");
-            String nomeCliente = gambi[0];
-            float peso = Float.parseFloat(gambi[1]);
-            float precoPorKg = Float.parseFloat(gambi[2]);
-            PedidoFP p = new PedidoFP(nomeCliente, peso, precoPorKg);
-            retorno[i] = p;
+            Pedido p = new Pedido(ordemPedido, nomeCliente, peso, precoPorKg);
+            retorno.add(p);
         }
         return retorno;
     }

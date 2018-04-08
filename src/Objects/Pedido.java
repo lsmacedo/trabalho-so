@@ -1,13 +1,17 @@
 package Objects;
 
+import DataStructures.OrdemPedidos;
+
 public class Pedido implements Comparable{
 
+    private int ordemPedido;
     private String cliente;
     private float peso;
     private float precoDoKg;
     private int tempoDeTermino;
 
-    public Pedido(String cliente, float peso, float precoDoKg) {
+    public Pedido(int ordemPedido, String cliente, float peso, float precoDoKg) {
+        this.ordemPedido = ordemPedido;
         this.cliente = cliente;
         this.peso = peso;
         this.precoDoKg = precoDoKg;
@@ -53,7 +57,10 @@ public class Pedido implements Comparable{
 
     @Override
     public int compareTo(Object o) {
-        return (int) (this.getPeso() - ((Pedido) o).getPeso());
+        if (this.ordemPedido == OrdemPedidos.ORDEM_CHEGADA || this.ordemPedido == OrdemPedidos.MENOR_PESO_PRIMEIRO)
+            return (int) (this.getPeso() - ((Pedido) o).getPeso());
+        else
+            return (int) (this.getPrecoDoKg() - ((Pedido) o).getPrecoDoKg());
     }
 
 }

@@ -8,21 +8,54 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrdemChegada {
+public class OrdemPedidos {
+
+    public static final int ORDEM_CHEGADA = 0;
+    public static final int MENOR_PESO_PRIMEIRO = 1;
+    public static final int ATENDIMENTO_RODIZIO = 2;
+    public static final int MAIOR_PRECO_KG_PRIMEIRO = 3;
 
     private List<Cliente> clientes;
-    private Pedido[] pedidos;
-    private float acumulador = 0;
-    private int horas = 1;
-    private int totalHoras=0;
+    private List<Pedido> pedidos;
+    private float acumulador;
+    private int horas;
+    private int totalHoras;
     private Cliente cliente;
+    private BinaryHeap heap;
 
-    public OrdemChegada()throws IOException{
+    public OrdemPedidos(int ordem)throws IOException{
         this.clientes = new ArrayList<>();
-        this.pedidos = PedidoDAO.lerPedidos();
         this.acumulador = 0;
         this.horas = 1;
         this.totalHoras = 0;
+        this.setHeap(ordem);
+        this.setPedidos(ordem);
+
+    }
+
+    public void setPedidos(int ordem) throws IOException{
+        switch (ordem){
+            case ORDEM_CHEGADA:
+                pedidos = PedidoDAO.lerPedidos(ORDEM_CHEGADA);
+                break;
+            case MENOR_PESO_PRIMEIRO:
+                pedidos = PedidoDAO.lerPedidos(MENOR_PESO_PRIMEIRO);
+                break;
+            case MAIOR_PRECO_KG_PRIMEIRO:
+                pedidos = PedidoDAO.lerPedidos(MAIOR_PRECO_KG_PRIMEIRO);
+                break;
+        }
+    }
+
+    public void setHeap(int ordem) {
+        switch (ordem){
+            case MENOR_PESO_PRIMEIRO:
+                heap = new BinaryHeap();
+                break;
+            case MAIOR_PRECO_KG_PRIMEIRO:
+                heap = new BinaryHeap(false);
+                break;
+        }
     }
 
     private void atualizarAcumulador(float peso){
@@ -42,10 +75,30 @@ public class OrdemChegada {
 
     public void simularPedidos(){
         for (Pedido pedido : pedidos) {
-            cliente = adicionarOuRecuperarCliente(clientes, pedido);
+            cliente = adicionarOuRecuperarCliente(pedido);
             atualizarAcumulador(pedido.getPeso());
             atualizarCliente(horas, cliente, pedido);
         }
+        this.mostrarSimulacaoCompleta();
+    }
+
+    private void inserirPedidosHeap(){
+        for(Pedido pedido : pedidos) {
+            heap.add(pedido);
+        }
+    }
+
+    public void simularPedidosHeap(){
+        inserirPedidosHeap();
+        pedidos.clear();
+        while (!heap.isEmpty()){
+            Pedido pedidoAtual = (Pedido) heap.remove();
+            pedidos.add(pedidoAtual);
+            cliente = adicionarOuRecuperarCliente(pedidoAtual);
+            atualizarAcumulador(pedidoAtual.getPeso());
+            atualizarCliente(horas, cliente, pedidoAtual);
+        }
+        this.mostrarSimulacaoCompleta();
     }
 
     private void mostrarTempoPrimeiroLote(){
@@ -69,7 +122,7 @@ public class OrdemChegada {
         System.out.println("\nTempo médio de espera: "+ (float)totalHoras/clientes.size()+" horas");
     }
 
-    public void mostrarSimulacaoCompleta(){
+    private void mostrarSimulacaoCompleta(){
         this.mostrarPedidos();
         this.mostrarTempoPrimeiroLote();
         this.mostrarTempoTotal();
@@ -82,7 +135,7 @@ public class OrdemChegada {
         cliente.addPedido(pedido);
     }
 
-    private Cliente adicionarOuRecuperarCliente(List<Cliente> clientes, Pedido pedido) {
+    private Cliente adicionarOuRecuperarCliente(Pedido pedido) {
         Cliente cliente;
         if (clientes.contains(new Cliente(pedido.getCliente()))) {
             int posNaLista = clientes.indexOf(new Cliente(pedido.getCliente()));
@@ -94,5 +147,7 @@ public class OrdemChegada {
         }
         return cliente;
     }
+
+
 
 }
