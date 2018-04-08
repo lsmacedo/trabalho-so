@@ -1,6 +1,9 @@
 package Main;
 
-import DataStructures.OrdemPedidos;
+import Scheduling.Scheduler;
+import Scheduling.SchedulerFCFS;
+import Scheduling.SchedulerPriority;
+import Scheduling.SchedulerSJN;
 
 import java.util.Scanner;
 
@@ -13,7 +16,7 @@ public class Main {
             Scanner in = new Scanner(System.in);
             int resp = -1;
 
-            while (resp != 9) {
+            while (true) {
 
                 System.out.println("\n----------ORDER SIMULATOR 9000----------\n");
 
@@ -28,26 +31,31 @@ public class Main {
                 System.out.print("\n >>  ");
                 resp = in.nextInt();
 
+                Scheduler ordem = null;
+                boolean inicializouScheduler = true;
+
                 switch (resp) {
 
                     case 1:
-                        OrdemPedidos ordem = new OrdemPedidos(OrdemPedidos.ORDEM_CHEGADA);
-                        ordem.simularPedidos();
+                        ordem = new SchedulerFCFS();
                         break;
                     case 2:
-                        OrdemPedidos ordemMenor = new OrdemPedidos(OrdemPedidos.MENOR_PESO_PRIMEIRO);
-                        ordemMenor.simularPedidosHeap();
+                        ordem = new SchedulerSJN();
                         break;
                     case 3:
+                        ordem = new SchedulerPriority();
                         break;
                     case 4:
-                        OrdemPedidos ordemMaior = new OrdemPedidos(OrdemPedidos.MAIOR_PRECO_KG_PRIMEIRO);
-                        ordemMaior.simularPedidosHeap();
+                        ordem = new SchedulerPriority();
                         break;
                     case 9:
                         return;
-
+                    default:
+                        inicializouScheduler = false;
                 }
+
+                if (inicializouScheduler)
+                    ordem.simularPedidos();
 
             }
         } catch (Exception e) {

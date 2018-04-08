@@ -1,6 +1,6 @@
 package Objects;
 
-import DataStructures.OrdemPedidos;
+import Scheduling.Scheduler;
 
 public class Pedido implements Comparable{
 
@@ -57,10 +57,14 @@ public class Pedido implements Comparable{
 
     @Override
     public int compareTo(Object o) {
-        if (this.ordemPedido == OrdemPedidos.ORDEM_CHEGADA || this.ordemPedido == OrdemPedidos.MENOR_PESO_PRIMEIRO)
-            return (int) (this.getPeso() - ((Pedido) o).getPeso());
-        else
-            return (int) (this.getPrecoDoKg() - ((Pedido) o).getPrecoDoKg());
+        switch (this.ordemPedido) {
+            case Scheduler.ORDEM_CHEGADA:
+            case Scheduler.MENOR_PESO_PRIMEIRO:
+                return (int) (this.getPeso() - ((Pedido) o).getPeso());
+            case Scheduler.MAIOR_PRECO_KG_PRIMEIRO:
+                return (int) (((Pedido) o).getPrecoDoKg() - this.getPrecoDoKg());
+        }
+        return 0;
     }
 
 }
