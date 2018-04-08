@@ -1,3 +1,5 @@
+package Objects;
+
 public class Pedido implements Comparable{
 
     private String cliente;

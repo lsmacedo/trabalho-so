@@ -1,3 +1,9 @@
+package DataStructures;
+
+import DAO.PedidoDAO;
+import Objects.Cliente;
+import Objects.PedidoFP;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,12 +13,12 @@ public class FilaPrioridade {
     public static void main(String[] args) {
         try {
             List<Cliente> clientes = new ArrayList<>();  // Lista de clientes
-            PedidoFP[] pedidos = DAO.lerPedidosFP();     // Lista de pedidos
-            HeapMax fp = new HeapMax();    // Fila de prioridades para o escalonador
+            PedidoFP[] pedidos = PedidoDAO.lerPedidosFP();     // Lista de pedidos
+            HeapMax fp = new HeapMax();    // DataStructures.OrdemChegada de prioridades para o escalonador
             float acumulador = 0;                        // Recebe a quantidade de roupas lavada
             int horas = 1;                               // Quantidade de horas passadas
-            PedidoFP pedido;                             // Pedido atual
-            Cliente cliente;                             // Cliente atual
+            PedidoFP pedido;                             // Objects.Pedido atual
+            Cliente cliente;                             // Objects.Cliente atual
 
             // Percorrendo lista de pedidos e adicionando na fila de prioridade
             for (PedidoFP p : pedidos) fp.insert(p);
@@ -29,7 +35,7 @@ public class FilaPrioridade {
                     clientes.add(cliente);
                 }
 
-                System.out.println("Pedido: " + pedido);
+                System.out.println("Objects.Pedido: " + pedido);
 
                 acumulador += pedido.getPeso();
                 while (acumulador >= 35) {

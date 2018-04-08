@@ -1,8 +1,13 @@
+package DAO;
+
+import Objects.Pedido;
+import Objects.PedidoFP;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class DAO {
+public class PedidoDAO {
 
     private static String[] lerRegistro() throws IOException {
         BufferedReader br = new BufferedReader(new FileReader("arquivo.txt"));
