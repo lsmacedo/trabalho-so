@@ -11,7 +11,7 @@ public abstract class Scheduler {
 
     public static final int ORDEM_CHEGADA = 0;
     public static final int MENOR_PESO_PRIMEIRO = 1;
-    public static final int ATENDIMENTO_RODIZIO = 2;
+
     public static final int MAIOR_PRECO_KG_PRIMEIRO = 3;
 
     protected List<Cliente> clientes;
@@ -39,6 +39,17 @@ public abstract class Scheduler {
             acumulador-=35;
         }
     }
+
+    protected float atualizarAcumulador2(float peso) { // André
+        acumulador = peso;
+        horas++;
+        if (acumulador > 35) {
+            while (acumulador > 35) {
+                acumulador -= 1;
+            }
+        } return acumulador;
+    }
+
 
     private void mostrarPedidos(){
         for (Pedido p : pedidos){

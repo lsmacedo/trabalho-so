@@ -1,9 +1,6 @@
 package Main;
 
-import Scheduling.Scheduler;
-import Scheduling.SchedulerFCFS;
-import Scheduling.SchedulerPriority;
-import Scheduling.SchedulerSJN;
+import Scheduling.*;
 
 import java.util.Scanner;
 
@@ -43,7 +40,7 @@ public class Main {
                         ordem = new SchedulerSJN();
                         break;
                     case 3:
-                        ordem = new SchedulerPriority();
+                        ordem = new SchedulerRotation();
                         break;
                     case 4:
                         ordem = new SchedulerPriority();
