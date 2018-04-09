@@ -12,7 +12,7 @@ public class SchedulerPriority extends Scheduler {
 
     public SchedulerPriority() throws IOException {
         super();
-        heap = new BinaryHeap();
+        heap = new BinaryHeap(false);
     }
 
     private void inserirPedidos(){

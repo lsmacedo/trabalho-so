@@ -6,8 +6,10 @@ import Objects.Pedido;
 import java.util.ArrayList;
 
 import java.io.IOException;
+import java.util.List;
 
 public class SchedulerRotation extends Scheduler {
+    protected List<Pedido> pedidos2=pedidos;
 
     public SchedulerRotation() throws IOException {
         super();
@@ -26,13 +28,13 @@ public class SchedulerRotation extends Scheduler {
                 pedido.setPeso((pedido.getPeso()-atualizarAcumulador2(pedido.getPeso())));
                 atualizarCliente(horas, cliente, pedido);
                 if( pedido.getPeso()==0) {
+                    System.out.println(pedidos.size());
                     pedidos.remove(pedido);
                 }
             }
 
         }
-
-            this.mostrarSimulacaoCompleta();
+           // this.mostrarSimulacaoCompleta();
         }
         }
 
