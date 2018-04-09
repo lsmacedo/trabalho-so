@@ -23,20 +23,19 @@ public class SchedulerRotation extends Scheduler {
     @Override
     public void simularPedidos(){
         while (pedidos.size()>0) {
-            for (Pedido pedido : pedidos) {
-                cliente = adicionarOuRecuperarCliente(pedido);
-                pedido.setPeso((pedido.getPeso()-atualizarAcumulador2(pedido.getPeso())));
-                atualizarCliente(horas, cliente, pedido);
-                if( pedido.getPeso()==0) {
-                    System.out.println(pedidos.size());
-                    pedidos.remove(pedido);
+            for (int i = 0; i < pedidos.size(); i++) {
+                cliente = adicionarOuRecuperarCliente(pedidos.get(i));
+                pedidos.get(i).setPeso(atualizarAcumulador2(pedidos.get(i).getPeso()));
+                atualizarCliente(horas, cliente, pedidos.get(i));
+                if( pedidos.get(i).getPeso()==0) {
+                    pedidos.remove(pedidos.get(i));
                 }
             }
 
         }
-           // this.mostrarSimulacaoCompleta();
-        }
-        }
+        this.mostrarSimulacaoCompleta();
+    }
+}
 
 
 

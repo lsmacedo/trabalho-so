@@ -46,10 +46,10 @@ public abstract class Scheduler {
         acumulador = peso;
         horas++;
         if (acumulador > 35) {
-            while (acumulador > 35) {
-                acumulador -= 1;
-            }
-        } return acumulador;
+            acumulador -= 35;
+        }
+        else acumulador = 0;
+        return acumulador;
     }
 
 
