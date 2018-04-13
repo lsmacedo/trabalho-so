@@ -42,15 +42,6 @@ public abstract class Scheduler {
         }
     }
 
-    protected float atualizarAcumulador2(float peso) { // André
-        acumulador = peso;
-        horas++;
-        if (acumulador > 35) {
-            acumulador -= 35;
-        }
-        else acumulador = 0;
-        return acumulador;
-    }
 
 
     protected void mostrarPedidos(){
@@ -60,12 +51,6 @@ public abstract class Scheduler {
         System.out.println();
     }
 
-    private void mostrarPedidos2(){
-        for (Pedido p : pedidos2){
-            System.out.println("Pedido: " + p);
-        }
-        System.out.println();
-    }
 
     private void mostrarTempoPrimeiroLote(){
         for (Cliente c : clientes){
@@ -94,22 +79,11 @@ public abstract class Scheduler {
         this.mostrarTempoTotal();
         this.mostrarTempoMedio();
     }
-    protected void mostrarSimulacaoCompleta2(){
-        this.mostrarPedidos2();
-        this.mostrarTempoPrimeiroLote();
-        this.mostrarTempoTotal();
-        this.mostrarTempoMedio();
-    }
 
     protected void atualizarCliente(int horas, Cliente cliente, Pedido pedido) {
         pedido.setTempoDeTermino(horas);
         cliente.setTempoEspera(horas);
         cliente.addPedido(pedido);
-    }
-    protected void atualizarCliente2(int horas, Cliente cliente, Pedido pedido) {
-        pedido.setTempoDeTermino(horas);
-        cliente.setTempoEspera(horas);
-
     }
 
     protected Cliente adicionarOuRecuperarCliente(Pedido pedido) {
