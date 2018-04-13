@@ -9,15 +9,22 @@ import java.io.IOException;
 import java.util.List;
 
 public class SchedulerRotation extends Scheduler {
-    protected List<Pedido> pedidos2=pedidos;
 
     public SchedulerRotation() throws IOException {
         super();
+        pedidos2 = clonarLista(pedidos);
     }
 
     @Override
     public void setPedidos() throws IOException {
         pedidos = PedidoDAO.lerPedidos(ORDEM_CHEGADA);
+    }
+
+    public List<Pedido> clonarLista(List<Pedido> list) {
+        List<Pedido> clone = new ArrayList<Pedido>(list.size());
+        for (Pedido item : list)
+            clone.add(item);
+        return clone;
     }
 
     @Override
