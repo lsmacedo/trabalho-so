@@ -53,8 +53,15 @@ public abstract class Scheduler {
     }
 
 
-    private void mostrarPedidos(){
+    protected void mostrarPedidos(){
         for (Pedido p : pedidos){
+            System.out.println("Pedido: " + p);
+        }
+        System.out.println();
+    }
+
+    private void mostrarPedidos2(){
+        for (Pedido p : pedidos2){
             System.out.println("Pedido: " + p);
         }
         System.out.println();
@@ -87,11 +94,22 @@ public abstract class Scheduler {
         this.mostrarTempoTotal();
         this.mostrarTempoMedio();
     }
+    protected void mostrarSimulacaoCompleta2(){
+        this.mostrarPedidos2();
+        this.mostrarTempoPrimeiroLote();
+        this.mostrarTempoTotal();
+        this.mostrarTempoMedio();
+    }
 
     protected void atualizarCliente(int horas, Cliente cliente, Pedido pedido) {
         pedido.setTempoDeTermino(horas);
         cliente.setTempoEspera(horas);
         cliente.addPedido(pedido);
+    }
+    protected void atualizarCliente2(int horas, Cliente cliente, Pedido pedido) {
+        pedido.setTempoDeTermino(horas);
+        cliente.setTempoEspera(horas);
+
     }
 
     protected Cliente adicionarOuRecuperarCliente(Pedido pedido) {
