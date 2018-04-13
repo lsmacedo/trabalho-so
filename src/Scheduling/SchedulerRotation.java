@@ -12,19 +12,12 @@ public class SchedulerRotation extends Scheduler {
 
     public SchedulerRotation() throws IOException {
         super();
-        pedidos2 = clonarLista(pedidos);
+        pedidos2 = new ArrayList<>(pedidos.size());
     }
 
     @Override
     public void setPedidos() throws IOException {
         pedidos = PedidoDAO.lerPedidos(ORDEM_CHEGADA);
-    }
-
-    public List<Pedido> clonarLista(List<Pedido> list) {
-        List<Pedido> clone = new ArrayList<Pedido>(list.size());
-        for (Pedido item : list)
-            clone.add(item);
-        return clone;
     }
 
     @Override
