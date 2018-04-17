@@ -16,7 +16,6 @@ public abstract class Scheduler {
 
     protected List<Cliente> clientes;
     protected List<Pedido> pedidos;
-    protected List<Pedido> pedidos2;
     protected float acumulador;
     protected int horas;
     protected int totalHoras;

@@ -7,8 +7,12 @@ import java.util.ArrayList;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.List;
 
 public class SchedulerRotation extends Scheduler {
+
+    protected List<Pedido> pedidos2;
+    protected List<Pedido> pedidos3;
 
     public SchedulerRotation() throws IOException {
         super();
@@ -17,13 +21,14 @@ public class SchedulerRotation extends Scheduler {
 
     @Override
     public void setPedidos() throws IOException {
-        pedidos = PedidoDAO.lerPedidos(ORDEM_CHEGADA);
+        pedidos = new ArrayList<>();
         pedidos2 = PedidoDAO.lerPedidos(ORDEM_CHEGADA);
+        pedidos3 = new ArrayList<>();
+        for (Pedido p : pedidos2) pedidos3.add(p.clone());
     }
 
     @Override
     public void simularPedidos() {
-        pedidos = new ArrayList<>();
         while (!pedidos2.isEmpty()) {
             for (int i = 0; i < pedidos2.size(); i++) {
                 cliente = adicionarOuRecuperarCliente(pedidos2.get(i));
@@ -33,15 +38,16 @@ public class SchedulerRotation extends Scheduler {
                     temp = null;
                 else
                     temp = pedidos2.get(i);
-                    atualizarCliente(this.horas, cliente, temp);
+                atualizarCliente(this.horas, cliente, temp);
                 if ((int) pedidos2.get(i).getPeso() == 0) {
                     pedidos.add(pedidos2.get(i));
                     Collections.sort(cliente.getPedidos());
                     pedidos2.remove(pedidos2.get(i));
                     i--;
                 }
-           }
+            }
         }
+        this.pedidos = this.pedidos3;
         this.mostrarSimulacaoCompleta();
     }
 
@@ -55,8 +61,3 @@ public class SchedulerRotation extends Scheduler {
         return acumulador;
     }
 }
-
-
-
-
-

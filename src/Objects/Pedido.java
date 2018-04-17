@@ -17,6 +17,11 @@ public class Pedido implements Comparable{
         this.precoDoKg = precoDoKg;
     }
 
+    private Pedido(int ordemPedido, String cliente, float peso, float precoDoKg, int tempoDeTermino) {
+        this(ordemPedido, cliente, peso, precoDoKg);
+        this.tempoDeTermino = tempoDeTermino;
+    }
+
     public String getCliente() {
         return cliente;
     }
@@ -67,6 +72,10 @@ public class Pedido implements Comparable{
                 return (this.getTempoDeTermino()) - ((Pedido)o).getTempoDeTermino();
         }
         return 0;
+    }
+
+    public Pedido clone() {
+        return new Pedido(this.ordemPedido, this.cliente, this.peso, this.precoDoKg, this.tempoDeTermino);
     }
 
 }
