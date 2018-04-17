@@ -1,6 +1,7 @@
-5
+6
 Lucas Vargas;69;17.60
 Daniel da Fonseca;36;26.90
 Dalila Santos;67;23.20
 AndrÃ© Saldanha;60;17.00
 Lucas Silva;23;17.40
+Daniel da Fonseca;2;17.60

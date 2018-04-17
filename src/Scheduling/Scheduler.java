@@ -11,7 +11,7 @@ public abstract class Scheduler {
 
     public static final int ORDEM_CHEGADA = 0;
     public static final int MENOR_PESO_PRIMEIRO = 1;
-
+    public static final int ROUND_ROBIN = 2;
     public static final int MAIOR_PRECO_KG_PRIMEIRO = 3;
 
     protected List<Cliente> clientes;
@@ -26,7 +26,7 @@ public abstract class Scheduler {
     public Scheduler() throws IOException{
         this.clientes = new ArrayList<>();
         this.acumulador = 0;
-        this.horas = 1;
+        this.horas = 0;
         this.totalHoras = 0;
         this.setPedidos();
     }
@@ -35,14 +35,13 @@ public abstract class Scheduler {
     public abstract void simularPedidos();
 
     protected void atualizarAcumulador(float peso){
-        acumulador += peso;
+        acumulador = peso;
         while (acumulador >= 35) {
             horas++;
             acumulador-=35;
         }
+        horas++;
     }
-
-
 
     protected void mostrarPedidos(){
         for (Pedido p : pedidos){
@@ -50,7 +49,6 @@ public abstract class Scheduler {
         }
         System.out.println();
     }
-
 
     private void mostrarTempoPrimeiroLote(){
         for (Cliente c : clientes){
@@ -66,7 +64,7 @@ public abstract class Scheduler {
             totalHoras += c.getTempoEspera();
             System.out.println("Tempo de espera do cliente "+ c.getNome()+ ": " + c.getTempoEspera()+ " horas");
         }
-        System.out.println();
+        System.out.println("Tempo total: " + totalHoras + " horas");
     }
 
     private void mostrarTempoMedio(){

@@ -63,6 +63,8 @@ public class Pedido implements Comparable{
                 return (int) (this.getPeso() - ((Pedido) o).getPeso());
             case Scheduler.MAIOR_PRECO_KG_PRIMEIRO:
                 return (int) ((this.getPrecoDoKg() * 100) - (((Pedido) o).getPrecoDoKg() * 100));
+            case Scheduler.ROUND_ROBIN:
+                return (this.getTempoDeTermino()) - ((Pedido)o).getTempoDeTermino();
         }
         return 0;
     }
